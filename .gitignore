@@ -1,0 +1,28 @@
+# Node.js dependencies & builds
+node_modules/
+dist/
+frontend/node_modules/
+frontend/dist/
+
+# Python virtual environments & cache
+.venv/
+__pycache__/
+*.pyc
+backend/.venv/
+backend/__pycache__/
+backend/src/backend/__pycache__/
+
+# App data, uploads & temporary local FAISS databases
+uploads/
+backend/uploads/
+faiss_index/
+backend/faiss_index/
+
+# Logs
+*.log
+backend/*.log
+frontend/*.log
+
+# Environment variables & secrets
+.env
+*.env

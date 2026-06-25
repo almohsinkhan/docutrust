@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: docutrust-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    container_name: docutrust-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - UPLOADS_DIR=/app/uploads
+      - FAISS_INDEX_DIR=/app/faiss_index
+    volumes:
+      - uploads-data:/app/uploads
+      - faiss-data:/app/faiss_index
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: docutrust-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  mongo-data:
+  uploads-data:
+  faiss-data:
